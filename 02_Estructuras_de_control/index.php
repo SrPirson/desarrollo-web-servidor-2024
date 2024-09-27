@@ -36,10 +36,23 @@
                     Ejercicios de fechas con la función date().
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <a href="ejercicio.php">ejercicio.php</a>
+                </td>
+                <td>
+                    Ejercicios de fechas con la función date().
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="bucles.php">bucles.php</a>
+                </td>
+                <td>
+                    Ejercicios de bucles.
+                </td>
+            </tr>
         </tbody>
-        <tfoot>
-
-        </tfoot>
     </table>
 </body>
 </html>

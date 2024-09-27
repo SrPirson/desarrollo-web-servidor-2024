@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Números</title>
+
+    <!-- Mostrar errores en la web -->
+    <?php
+        error_reporting( E_ALL );
+        ini_set( "display_errors", 1 );    
+    ?>
+
 </head>
 <body>
 
@@ -110,6 +117,20 @@
     $digitos_texto = "dígitos.";
     if ($digitos == 1) $digitos_texto = "dígito.";
     echo "<p>El número $num_alea tiene $digitos $digitos_texto</p>";
+
+    /* VERSION CON MATCH */
+    $resultado = match (true) {
+        $num_alea >= 1 && $num_alea <= 9 => 1,
+        $num_alea >= 10 && $num_alea <= 99 => 2,
+        $num_alea >= 100 && $num_alea <= 999 => 3,
+        default => "ERROR"
+    };
+
+    $digitos_texto = "dígitos.";
+    if ($digitos == 1) $digitos_texto = "dígito.";
+    echo "<p>El número $num_alea tiene $digitos $digitos_texto</p>";
+
+    
         
     ?>
 
@@ -117,6 +138,7 @@
 
     $n = rand(1,3);
 
+    /* FORMA 1 */
     switch($n) {
         case 1:
             echo "El número es $n";
@@ -128,6 +150,15 @@
             echo "El número es $n";
             break;
     }
+
+    /* FORMA 2 */
+    $resultado = match($n) {
+        1 => "El numero es 1",
+        2 => "El numero es 2",
+        3 => "El numero es 3"
+    };
+
+    echo "<h3>$resultado</h3>";
 
     ?>
 

@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fechas</title>
+
+    <!-- Mostrar errores en la web -->
+    <?php
+        error_reporting( E_ALL );
+        ini_set( "display_errors", 1 );    
+    ?>
+
 </head>
 <body>
 
@@ -78,9 +85,31 @@
             echo "Hoy $dia no tenemos clase";
             break;
     }
-    
-    ?>
 
+    /* 
+
+        CON ESTRUCTURA SWITCH CAMBIAR LA VARIABLE DÍA A ESPAÑOL
+        REESCRIBIR EL SWITCH DE LOS DÍAS DE CLASE CON VARIABLE EN ESPAÑOL
+
+    */
+
+    $dia = date("l");
+    $dia_espanol = null;
+
+    /* Switch dopado */
+    $dia_espanol = match($dia) {
+        "Monday" => "Lunes",
+        "Tuesday" => "Martes",
+        "Wednesday" => "Miércoles",
+        "Thursday" => "Jueves",
+        "Friday" => "Viernes",
+        "Saturday" => "Sábado",
+        "Sunday" => "DOmingo"
+    };
+
+    echo "<h3>$dia_espanol</h3>";
+
+    ?>
 
 </body>
 </html>
