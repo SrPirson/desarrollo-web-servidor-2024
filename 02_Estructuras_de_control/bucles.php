@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bucles</title>
+
+    <!-- Mostrar errores en la web -->
+    <?php
+        error_reporting( E_ALL );
+        ini_set( "display_errors", 1 );    
+    ?>
+
 </head>
 <body>
     
     <h1>Lista con WHILE</h1>
     <?php
+
     /* BUCLE WHILE */
     $i = 1;
 
@@ -22,6 +30,7 @@
 
     <h1>Lista con WHILE alternativa</h1>
     <?php
+
     /* BUCLE WHILE */
     $i = 1;
 
@@ -31,25 +40,7 @@
         $i++;
     endwhile;
     echo "</ul>";
-    ?>
-
-    <!-- 
-        EJERCICIO 02:
-        MOSTRAR EN UNA LISTA LOS NÚMEROS MÚLTIPLOS DE 3 USANDO WHILE E IF
-    -->
-    
-
-    <!-- 
-        EJERCICIO 03:
-        CALCULAR LA SUMA DE LOS NÚMEROS PARES ENTRE 1 Y 20
-    -->
-
-
-    <!-- 
-        EJERCICIO 04:
-        CALCULAR EL FACTORIAL DE 6 CON WHILE
-    -->
-    
+    ?>    
 
 </body>
 </html>
