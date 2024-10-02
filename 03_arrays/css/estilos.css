@@ -1,0 +1,22 @@
+table {
+    border: 2px solid rgb(172, 77, 196);
+    
+}
+
+th, td {
+    border: 2px solid rgb(20, 194, 165);
+    padding: 10px;
+}
+
+caption {
+    border: 2px solid pink;
+}
+
+.suspenso {
+    background-color: red;
+    color: white;
+}
+
+.aprobado {
+    background-color: greenyellow;
+}
