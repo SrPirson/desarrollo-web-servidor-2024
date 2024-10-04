@@ -13,10 +13,10 @@ caption {
 }
 
 .suspenso {
-    background-color: red;
+    background-color: rgb(207, 133, 133);
     color: white;
 }
 
 .aprobado {
-    background-color: greenyellow;
+    background-color: rgb(212, 247, 160);
 }

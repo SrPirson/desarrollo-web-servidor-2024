@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicios Array</title>
     <link rel="stylesheet" type="text/css" href="./css/estilos.css">
+    <!-- Mostrar errores en la web -->
+    <?php
+        error_reporting( E_ALL );
+        ini_set( "display_errors", 1 );    
+    ?>
 </head>
 <body>
 
     <!-- EL VIERNES VEMOS COMO ORDENAR TABLAS -->
+    
     <!--
-
     EJERCICIO 01
 
     Desarrollo web en entorno servidor => Alejandra
@@ -21,10 +26,11 @@
     Inglés => Virginia
 
     MOSTRARLO TODO EN UNA TABLA
-
     -->
+
+    <h1>Ejercicio 1</h1>
     <?php
-    $calendario = [
+    $asignaturas = [
         "Desarrollo web en entorno servidor" => "Alejandra",
         "Desarrollo web en entorno cliente" => "José Miguel",
         "Diseño de interfaces web" => "José Miguel",
@@ -32,6 +38,9 @@
         "Empresa e iniciativa emprenderora" => "Convalidado",
         "Inglés" => "Virginia",
     ];
+
+
+
     ?>
 
     <table>
@@ -44,7 +53,10 @@
         </thead>
         <tbody>
                 <?php
-                    foreach ($calendario as $asignatura => $profesor) { ?>
+                /* Sorting Arrays PHP */
+                ksort($asignaturas);
+
+                    foreach ($asignaturas as $asignatura => $profesor) { ?>
                         <tr>
                             <td><?php echo $asignatura ?></td>
                             <td><?php echo $profesor ?></td>
@@ -55,8 +67,7 @@
 
     <br><br>
 
-    <!-- 
-    
+    <!--
     EJERCICIO 02
 
     Francisco => 3
@@ -69,8 +80,10 @@
      - COLUMNA 1: ALUMNO
      - COLUMNA 2: NOTA
      - COLUMNA 3: SI NOTA < 5, SUSPENSO, ELSE, APROBADO
-
     -->
+
+
+    <h1>Ejercicio 2</h1>
 
     <?php
     $notas = [
@@ -79,6 +92,9 @@
         "Aurora" => 10,
         "Luis" => 7,
         "Samuel" => 9,
+        "Juanjo" => 2,
+        "Vicente" => 11,
+        "Raulito" => 0,
     ];
     ?>
 
@@ -88,26 +104,31 @@
             <tr>
                 <th>Alumno</th>                
                 <th>Nota</th>
-                <th>Resultado</th>
+                <th>Calificación</th>
             </tr>
         </thead>
         <tbody>
                 <?php
-                    foreach ($notas as $alumno => $nota) { 
-                        if ($nota < 5){
+                asort($notas);
+                    foreach ($notas as $alumno => $nota) {
+                        if ($nota >= 0 && $nota < 5) {
                             echo "<tr class='suspenso'>";
-                        } else {
+                        } elseif ($nota >= 5 && $nota <= 10) {
                             echo "<tr class='aprobado'>";
+                        } else {
+                            echo "<tr class='suspenso'>";
                         }
                         ?>
                             <td><?php echo $alumno ?></td>
                             <td><?php echo $nota ?></td>
                             
                                 <?php 
-                                if ($nota < 5){
-                                    echo "<td class='suspenso'>Suspenso</td>";
+                                if ($nota >= 0 && $nota < 5) {
+                                    echo "<td>Suspenso</td>";
+                                } elseif ($nota >= 5 && $nota <= 10) {
+                                    echo "<td>Aprobado</td>";
                                 } else {
-                                    echo "<td class='aprobado'>Aprobado</td>";
+                                    echo "<td>ERROR</td>";
                                 }
                                 ?>
                             </td>
@@ -115,6 +136,31 @@
                 <?php } ?>
         </tbody>
     </table>
+
+
+    <!-- 
+    
+    Ejercicio 03
+
+    Insertar dos nuevos estudiantes, con notas aleatorias entre 0 y 10.
+    Borrar un estudiante (el que peor os caiga) por la clave.
+    Mostrar en una tabla todo ordenador por los nombres en orden alfabeticamente inverso.
+    Mostrar en una nueva tabla todo ordenado por la nota de 10 a 0 (orden inverso).
+    
+    -->
+
+    
+
+
+
+    <!-- 
+    
+    Ejercicio 04
+
+
+
+    -->
+
 
 
 </body>
