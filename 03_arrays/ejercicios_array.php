@@ -138,7 +138,7 @@
             <?php } ?>
         </tbody>
     </table>
-
+    <br><br><br>
 
     <!-- 
     
@@ -158,19 +158,8 @@
     $num_alea1 = rand(0,10);
     $num_alea2 = rand(0,10);
 
-    $notas = [
-        "Francisco" => 3,
-        "Daniel" => 5,
-        "Aurora" => 10,
-        "Luis" => 7,
-        "Samuel" => 9,
-        "Juanjo" => 2,
-        "Vicente" => 1,
-        "Raulito" => 0,
-
-        "Ivansillo" => $num_alea1,
-        "Aguntinsillo" => $num_alea2,
-    ];
+    $notas["Paula"] = $num_alea1;
+    $notas["Ivan"] = $num_alea2;
     unset($notas["Samuel"]);
     ?>
 
