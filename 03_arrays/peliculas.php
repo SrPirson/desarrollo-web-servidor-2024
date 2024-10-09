@@ -14,12 +14,25 @@
 <body>
     <?php
     $peliculas = [
-        ["Kárate a muerte en Torremolinos", "Acción", 1975, rand(30,240)],
-        ["Sharknado 1-5", "Acción", 2015, rand(30,240)],
-        ["Princesa por sorpresa 2", "Comedia", 2008, rand(30,240)],
-        ["Torrente", "Infantil", 2010, rand(30,240)],
-        ["Stuart Little", "Terror", 2000, rand(30,240)],
-    ]
+        ["Kárate a muerte en Torremolinos", "Acción", 1975],
+        ["Sharknado 1-5", "Acción", 2015],
+        ["Princesa por sorpresa 2", "Comedia", 2008],
+        ["Torrente", "Infantil", 2010],
+        ["Stuart Little", "Terror", 2000],
+    ];
+
+    for($i = 0; $i < count($peliculas); $i++) {
+        $peliculas[$i][3] = rand(30,240);
+
+
+        if($peliculas[$i][3] < 60){
+            $peliculas[$i][4] = "CORTOMETRAJE";
+        }
+        else{
+            $peliculas[$i][4] = "LARGOMETRAJE";
+        }
+    }
+
     ?>
 
     <table>
@@ -28,6 +41,7 @@
                 <th>Titulo</th>
                 <th>Genero</th>
                 <th>Año</th>
+                <th>Duración</th>
                 <th>Tipo</th>
             </tr>
         </thead>
@@ -35,20 +49,13 @@
         <?php
             foreach($peliculas as $pelicula) { 
                 // Descompone el array en varias variables, solamente dentro del foreach
-                list($titulo, $categoria, $anio, $duracion) = $pelicula; ?>
+                list($titulo, $categoria, $anio, $duracion, $tipo) = $pelicula; ?>
                 <tr>
                 <td><?php echo $titulo ?></td>
                 <td><?php echo $categoria ?></td>
                 <td><?php echo $anio ?></td>
-                <td>
-                    <?php
-                    if($duracion < 60){
-                        echo "CORTOMETRAJE";
-                    } elseif ($duracion >= 60){
-                        echo "LARGOMETRAJE";
-                    }
-                    ?>
-                </td>
+                <td><?php echo $duracion ?></td>
+                <td><?php echo $tipo ?></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -63,7 +70,7 @@
     $_titulo = array_column($peliculas, 2);
 
     array_multisort($_genero, SORT_ASC, 
-                    $_anio, SORT_ASC, 
+                    $_anio, SORT_DESC, 
                     $_titulo, SORT_ASC, 
                     $peliculas);
     ?>
@@ -74,6 +81,7 @@
                 <th>Titulo</th>
                 <th>Genero</th>
                 <th>Año</th>
+                <th>Duración</th>
                 <th>Tipo</th>
             </tr>
         </thead>
@@ -81,20 +89,13 @@
         <?php
             foreach($peliculas as $pelicula) { 
                 // Descompone el array en varias variables, solamente dentro del foreach
-                list($titulo, $categoria, $anio, $duracion) = $pelicula; ?>
+                list($titulo, $categoria, $anio, $duracion, $tipo) = $pelicula; ?>
                 <tr>
                 <td><?php echo $titulo ?></td>
                 <td><?php echo $categoria ?></td>
                 <td><?php echo $anio ?></td>
-                <td>
-                    <?php
-                    if($duracion < 60){
-                        echo "CORTOMETRAJE";
-                    } elseif ($duracion >= 60){
-                        echo "LARGOMETRAJE";
-                    }
-                    ?>
-                </td>
+                <td><?php echo $duracion ?></td>
+                <td><?php echo $tipo ?></td>
                 </tr>
             <?php } ?>
         </tbody>
