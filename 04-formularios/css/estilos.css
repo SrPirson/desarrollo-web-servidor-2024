@@ -1,0 +1,23 @@
+table {
+    border: 2px solid rgb(172, 77, 196);
+    
+}
+
+th, td {
+    border: 2px solid rgb(20, 194, 165);
+    padding: 10px;
+    text-align: center;
+}
+
+caption {
+    border: 2px solid pink;
+}
+
+.suspenso {
+    background-color: rgb(207, 133, 133);
+    color: white;
+}
+
+.aprobado {
+    background-color: rgb(212, 247, 160);
+}
