@@ -121,7 +121,7 @@
     <br>
     <?php
 
-    $num = 2;
+    $num = 20;
     $numerosPrimos = 0;
 
     echo "<ol>";
