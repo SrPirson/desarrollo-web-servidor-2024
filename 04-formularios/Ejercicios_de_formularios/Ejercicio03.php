@@ -32,12 +32,8 @@
         
         for ($i = $num1; $i <= $num2; $i++) { 
             $es_primo = true;
-
-            if ($i < 2) {
-                continue;
-            }
             
-            for ($j = 2; $j < $i; $j++) {
+            for ($j = 2; $j <= $i/2; $j++) {
                 if ($i % $j == 0) {
                     $es_primo = false;
                     break;

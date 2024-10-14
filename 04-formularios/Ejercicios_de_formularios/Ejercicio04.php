@@ -38,7 +38,7 @@
         $temp = $_POST["temp"];
         $original = $_POST["original"];
         $change = $_POST["change"];
-        $convertidor = 0;
+        $convertidor = $temp;
         echo "<br><br>";
         
         if ($original == $change) {
