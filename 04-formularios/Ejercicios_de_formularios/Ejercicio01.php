@@ -32,13 +32,12 @@
         $num1 = $_POST["num1"];
         $num2 = $_POST["num2"];
         $num3 = $_POST["num3"];
-        $mayor = -999999;
+        $mayor = $num1;
 
-        if ($num1 > $num2 && $num1 > $num3) {
-            $mayor = $num1;
-        } elseif ($num2 > $num3) {
+        if ($num2 > $mayor) {
             $mayor = $num2;
-        } else {
+        } 
+        if ($num3 > $mayor) {
             $mayor = $num3;
         }
         echo "<br><br>";
