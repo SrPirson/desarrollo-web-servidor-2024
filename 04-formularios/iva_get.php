@@ -14,17 +14,7 @@
     ?>
 </head>
 <body>
-    
-    <!--
-    GENERAL = 21%
-    REDUCIDO = 10%
-    SUPERREDUCIDO = 4%
-
-    10€ IVA = GENERAL, PVP = 12,1€ PVP = precio * 1.21
-    10€ iva = REDUCIDO, PVP = 11€  PVP = precio * 1.1
-    -->
-
-    <form action="" method="post">
+    <form action="" method="get">
         <label for="precio">Precio</label>
         <input type="text" name="precio" id="precio">
         <br><br>
@@ -38,9 +28,13 @@
     </form>
 
     <?php
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-        $precio = $_POST["precio"];
-        $iva = $_POST["iva"];
+    /* isset (is set) devuelve true si la variable existe */
+    if(isset($_GET["precio"]) and isset($_GET["iva"])){
+        $precio = $_GET["precio"];
+        $iva = $_GET["iva"];
+
+        /* var_dump($precio);
+        var_dump($iva); */
 
         if ($precio != "" and $iva != "") {
             $pvp = match($iva) {
@@ -48,12 +42,14 @@
                 "reducido" => $precio * REDUCIDO,
                 "superreducido" => $precio * SUPERREDUCIDO
             };
-    
+
             echo "<p>El PVP ES $pvp</p>";
+
         } else {
             echo "<p>Te faltan datos peeeeeeeeerro</p>";
         }
 
+        
     }
     ?>
 </body>
