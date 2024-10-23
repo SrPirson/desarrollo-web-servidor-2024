@@ -29,8 +29,7 @@
                     }
                     break;
             }
-            echo "<br><br>";
-            echo "$temperaturaInicial grados $unidadInicial son $convertidor grados $unidadFinal";
+            return $convertidor;
         }
 
     }

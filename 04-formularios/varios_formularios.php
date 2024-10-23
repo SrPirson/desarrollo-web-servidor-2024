@@ -39,7 +39,46 @@
         <input type="submit" value="Convertir">
     </form>
 
-    <br><br><br>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_POST["accion"] == "formulario_temperaturas") {
+            $temperatura = $_POST["temp"];
+            $original = $_POST["original"];
+            $cambio = $_POST["change"];
+
+            if ($temperatura != "") {
+                if (is_numeric($temperatura)) {
+                    if ($original == "celsius" && $temperatura >= -273.15) {
+                        echo convertirTemperatura($temperatura, $original, $cambio);
+                    } elseif ($original == "celsius" && $temperatura < -273.15) {
+                        echo "<br>";
+                        echo "La temperatura no puede ser inferior a -273.15ºC";
+                    }
+                    if ($original == "kelvin" && $temperatura >= 0) {
+                        echo convertirTemperatura($temperatura, $original, $cambio);
+                    } elseif ($original == "kelvin" && $temperatura < 0) {
+                        echo "<br>";
+                        echo "La temperatura no puede ser inferior a 0ºK";
+                    }
+                    if ($original == "fahrenheit" && $temperatura >= -459.67) {
+                        echo convertirTemperatura($temperatura, $original, $cambio);
+                    } elseif ($original == "fahrenheit" && $temperatura < -459.67) {
+                        echo "<br>";
+                        echo "La temperatura no puede ser inferior a -459.67ºF";
+                    }
+                } else {
+                    echo "<br>";
+                    echo "<p>La temperatura debe ser un número.</p>";
+                }
+            } else {
+                echo "<br>";
+                echo "<p>Falta la temperatura.</p>";
+            }
+        }
+    }
+    ?>
+
+    <br>
     <h3>Edades</h3>
     <br>
 
@@ -57,17 +96,6 @@
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if ($_POST["accion"] == "formulario_temperaturas") {
-            $temperatura = $_POST["temp"];
-            $original = $_POST["original"];
-            $cambio = $_POST["change"];
-            convertirTemperatura($temperatura, $original, $cambio);
-        }
-    }
-    ?>
-    
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($_POST["accion"] == "formulario_edades") {
             $nombre = $_POST["name"];
             $edad = $_POST["age"];
@@ -75,8 +103,6 @@
         }
     }
     ?>
-
-
 
 </body>
 </html>

@@ -8,6 +8,8 @@
     <?php
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
+
+    require("../05-funciones/potencias.php");
     ?>
 </head>
 <body>
@@ -38,25 +40,73 @@
     $mostrar = "Resultado = ";
     if($_SERVER["REQUEST_METHOD"] == "POST"){ 
 
-        $base = $_POST["base"];
-        $elevado = $_POST["elevado"];
-        $resultado = $base;
+        $tmp_base = $_POST["base"];
+        $tmp_exponente = $_POST["elevado"];
 
-        if($elevado == 0) {
-            $resultado = 1;
-        } elseif ($elevado == 1) {
-            $resultado = $base;
+        // Comprobaciones de la base
+/*         
+        if ($tmp_base != "") {
+            if (filter_var($tmp_base, FILTER_VALIDATE_INT) !== FALSE) {
+                $base = $tmp_base;
+            } else {
+                echo "<p>La base debe ser un número entero</p>";
+            }
         } else {
-            for($i = 1; $i < $elevado; $i++) {
-                $resultado *= $base;
+            echo "<p>La base es obligatoria</p>";
+        } 
+*/
+
+        // Otra forma de comprobar - Invertimos las comprobaciones
+        if ($tmp_base == "") {
+            echo "<p>La base es obligatoria</p>";
+        } else {
+            if (filter_var($tmp_base, FILTER_VALIDATE_INT) === FALSE) {
+                echo "<p>La base debe ser un número entero</p>";
+            } else {
+                $base = $tmp_base;
             }
         }
 
-        $mostrar = "$mostrar" . "$resultado";
+        // Comprobaciones del exponente
+/* 
+        if ($tmp_exponente != "") {
+            if (filter_var($tmp_exponente, FILTER_VALIDATE_INT) !== FALSE) {
+                if ($tmp_exponente >= 0) {
+                    $exponente = $tmp_exponente;
+                } else {
+                    echo "<p>El exponente debe ser mayor o igual que cero</p>";
+                }
+            } else {
+                echo "<p>El exponente debe ser un número entero</p>";
+            }
+        } else {
+            echo "<p>El exponente es obligatorio</p>";
+        }
+*/
+
+        // Otra forma de comprobar - Invertimos las comprobaciones
+        if ($tmp_exponente == "") {
+            echo "<p>El exponente es obligatorio</p>";
+        } else {
+            if (filter_var($tmp_exponente, FILTER_VALIDATE_INT) === FALSE) {
+                echo "<p>El exponente debe ser un número entero</p>";
+            } else {
+                if ($tmp_exponente < 0) {
+                    echo "<p>El exponente debe ser mayor o igual que cero</p>";
+                } else {
+                    $exponente = $tmp_exponente;
+                }
+            }
+        }
+        
+        if (isset($base) && isset($exponente)) { // isset - si la variable existe
+            $resultado = potencia($base, $exponente);
+            echo "<p>El resultado es $resultado</p>";
+        } else {
+            echo "<p>Bobolon</p>";
+        }
 
     }
-    echo "<br>";
-    echo $mostrar;
     ?>
 </body>
 </html>
