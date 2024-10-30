@@ -185,10 +185,12 @@
                         $nacimiento = explode("-", $tmp_fechaNac);
                         // list($anno,$mes,$dia) = explode("-", $tmp_fechaNac);
 
-                        if (($fechaActual[0] - $nacimiento[0]) > 18) {
+                        if (($fechaActual[0] - $nacimiento[0]) > 18 && ($fechaActual[0] - $nacimiento[0]) <= 120) {
                             $fechaNac = $tmp_fechaNac;
                         } elseif (($fechaActual[0] - $nacimiento[0]) < 18) {
                             $err_fechaNac = "Eres menor de edad";
+                        } elseif (($fechaActual[0] - $nacimiento[0]) > 120) {
+                            $err_fechaNac = "Eres demasiado mayor";
                         } else {
                             if (($fechaActual[1] - $nacimiento[1]) > 0) {
                                 $fechaNac = $tmp_fechaNac;
@@ -205,7 +207,7 @@
                     } 
                 }
 
-                
+
             }
         ?>
 
