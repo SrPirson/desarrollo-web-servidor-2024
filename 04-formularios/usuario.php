@@ -190,7 +190,17 @@
                         } elseif (($fechaActual[0] - $nacimiento[0]) < 18) {
                             $err_fechaNac = "Eres menor de edad";
                         } elseif (($fechaActual[0] - $nacimiento[0]) > 120) {
-                            $err_fechaNac = "Eres demasiado mayor";
+                            if (($fechaActual[1] - $nacimiento[1]) < 0) {
+                                $fechaNac = $tmp_fechaNac;
+                            } elseif (($fechaActual[1] - $nacimiento[1]) > 0) {
+                                $err_fechaNac = "Eres demasiado mayor";
+                            } else {
+                                if (($fechaActual[2] - $nacimiento[2]) <= 0) {
+                                    $fechaNac = $tmp_fechaNac;
+                                } elseif (($fechaActual[2] - $nacimiento[2]) < 0) {
+                                    $err_fechaNac = "Eres demasiado mayor";
+                                }
+                            }
                         } else {
                             if (($fechaActual[1] - $nacimiento[1]) > 0) {
                                 $fechaNac = $tmp_fechaNac;
