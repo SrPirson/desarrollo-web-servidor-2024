@@ -1,5 +1,5 @@
 <?php
-    function pontenciador($base, $elevado){
+    function pontenciador(int $base, int $elevado) : int {
         $mostrar = "Resultado = ";
         if($_SERVER["REQUEST_METHOD"] == "POST"){ 
 

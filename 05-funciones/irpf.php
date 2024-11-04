@@ -1,6 +1,6 @@
 <?php
 
-function calcularIRPF($salario) {
+function calcularIRPF(int|float $salario) : float {
     $salario_final = null;
         
     if ($salario != "") {

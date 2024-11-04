@@ -9,7 +9,7 @@
     <!-- Comprobar errores -->
     <?php
         error_reporting( E_ALL );
-        ini_set("display_errors", 1 );    
+        ini_set("display_errors", 1 );
     ?>
 
     <!-- Estilos -->
@@ -18,9 +18,22 @@
             color: red;
         }
     </style>
-    
+
 </head>
 <body>
+
+    <?php
+
+    function depurar(string $entrada) : string { // (entrada string) : retrung string
+        $salida = htmlspecialchars($entrada); // Para que no lleguen scripts o cosas raras que no queremos
+        $salida = trim($salida); // Elimina los espacios de antes y despues
+        $salida = stripslashes($salida); // Elimina mas cosas raras
+        $salida = preg_replace('!\s+!', ' ', $salida); // Elimina espacios en blanco para que llegue limpio a la BBDD
+        return $salida;
+    }
+
+    ?>
+
     <div class="container">
         <h1>Formulario Usuario</h1>
         <br>
@@ -29,12 +42,12 @@
 
         <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $tmp_usuario = $_POST["usuario"];
-                $tmp_nombre = $_POST["nombre"];
-                $tmp_apellidos = $_POST["apellidos"];
-                $tmp_dni = $_POST["dni"];
-                $tmp_correo = $_POST["correo"];
-                $tmp_fechaNac = $_POST["fechaNac"];
+                $tmp_usuario = depurar($_POST["usuario"]);
+                $tmp_nombre = depurar($_POST["nombre"]);
+                $tmp_apellidos = depurar($_POST["apellidos"]);
+                $tmp_dni = depurar($_POST["dni"]);
+                $tmp_correo = depurar($_POST["correo"]);
+                $tmp_fechaNac = depurar($_POST["fechaNac"]);
 
 
                 /* Validación usuario */
@@ -46,7 +59,7 @@
                     if (!preg_match($patron_usuario, $tmp_usuario)) { // preg_match para comprobar con el patron, primero el patrón despues con lo que queremos comprobarlo
                        $err_usuario = "El usuario debe contener de 4 a 12 letras, números o barrabaja."; 
                     } else {
-                        $usuario = $tmp_usuario;
+                        $usuario = ucwords(strtolower($tmp_usuario)); // Ordena la palabra con la primera en mayuscula
                     }
                 }
 
@@ -63,7 +76,7 @@
                         if (!preg_match($patron_nombre, $tmp_nombre)) {
                             $err_nombre = "El nombre solo puede contener letras y espacios en blanco.";
                         } else {
-                            $nombre = $tmp_nombre;
+                            $nombre = ucwords(strtolower($tmp_nombre));
                         }
                     }
                 }
@@ -81,7 +94,7 @@
                         if (!preg_match($patron_apellidos, $tmp_apellidos)) {
                             $err_apellidos = "El apellido solo puede contener letras y espacios en blanco.";
                         } else {
-                            $apellidos = $tmp_apellidos;
+                            $apellidos = ucwords(strtolower($tmp_apellidos));
                         }
                     }
                 }
@@ -185,12 +198,17 @@
                         $nacimiento = explode("-", $tmp_fechaNac);
                         // list($anno,$mes,$dia) = explode("-", $tmp_fechaNac);
 
+                        echo $fechaActual[0] . " -> " . $nacimiento[0] . "<br>";
+                        echo $fechaActual[1] . " -> " . $nacimiento[1] . "<br>";
+                        echo $fechaActual[2] . " -> " . $nacimiento[2] . "<br>";
+
+
                         if (($fechaActual[0] - $nacimiento[0]) > 18 && ($fechaActual[0] - $nacimiento[0]) <= 120) {
                             $fechaNac = $tmp_fechaNac;
                         } elseif (($fechaActual[0] - $nacimiento[0]) < 18) {
                             $err_fechaNac = "Eres menor de edad";
-                        } elseif (($fechaActual[0] - $nacimiento[0]) > 120) {
-                            if (($fechaActual[1] - $nacimiento[1]) < 0) {
+                        } elseif (($fechaActual[0] - $nacimiento[0]) <= 120) {
+                            if (($fechaActual[1] - $nacimiento[1]) <= 0) {
                                 $fechaNac = $tmp_fechaNac;
                             } elseif (($fechaActual[1] - $nacimiento[1]) > 0) {
                                 $err_fechaNac = "Eres demasiado mayor";
@@ -216,8 +234,6 @@
                         }
                     } 
                 }
-
-
             }
         ?>
 
@@ -292,7 +308,7 @@
                 <h1><?php echo $dni ?></h1>
                 <h1><?php echo $usuario ?></h1>
                 <h1><?php echo $correo ?></h1>
-                <h1><?php echo "Eres mayor de edad" ?></h1>
+                <h1><?php echo $fechaNac ?></h1>
         <?php
             }
         ?>
