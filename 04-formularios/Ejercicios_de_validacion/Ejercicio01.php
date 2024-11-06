@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 01</title>
+    <title>Formulario de videojuegos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
     <!-- Comprobar errores -->
@@ -15,12 +15,17 @@
 
     <style>
     .container{
-            border: 1px solid black;
-            padding: 10px;
-            margin-top: 10px;
+        border: 1px solid black;
+        padding: 10px;
+        margin-top: 10px;
     }
     .error {
-            color: red;
+        color: red;
+    }
+    h1{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     </style>
     
@@ -43,10 +48,12 @@
 
     <div class="container">
 
-        <h1>Ejercicio 01</h1>
+        <h1>Formulario de videojuegos</h1>
+        <hr>
 
         <?php
 
+        /* Validaciones */
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Titulo
             $tmp_titulo = depurar($_POST["titulo"]); 
@@ -85,11 +92,11 @@
             if ($tmp_consola == "") {
                 $err_consola = "La consola es obligatoria.";
             } else {
-                $lista_consolas = ["switch", "ps5", "ps4", "xboxSeX", "xboxSeZ", "pc"];
+                $lista_consolas = ["switch", "ps5", "ps4", "xboxSeXS", "pc"];
                 if (!in_array($tmp_consola, $lista_consolas)) {
                     $err_consola = "La consola seleccionada no es válida.";
                 } else {
-                    $consola = $tmp_consola;
+                    $consola = strtoupper($tmp_consola);
                 }
             }
 
@@ -163,7 +170,7 @@
             if (strlen($tmp_descripcion) < 0 || strlen($tmp_descripcion) > 255) {
                 $err_descripcion = "La descripción tiene que tener entre 0 y 255 caracteres.";
             } else {
-                $descripcion = strtolower($tmp_descripcion);
+                $descripcion = $tmp_descripcion;
             }
 
         }
@@ -194,35 +201,28 @@
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="consola" id="gridRadios1" value="switch">
                         <label class="form-check-label" for="gridRadios1">
-                            Switch
+                            Nintendo Switch
                         </label>
                     </div>
 
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="consola" id="gridRadios2" value="ps5">
                         <label class="form-check-label" for="gridRadios2">
-                            PS5
+                            Playstation 5
                         </label>
                     </div>
 
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="consola" id="gridRadios3" value="ps4">
                         <label class="form-check-label" for="gridRadios3">
-                            PS4
+                            Playstation 4
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="consola" id="gridRadios4" value="xboxSeX">
+                        <input class="form-check-input" type="radio" name="consola" id="gridRadios4" value="xboxSeXS">
                         <label class="form-check-label" for="gridRadios4">
-                            Xbox Series X
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="consola" id="gridRadios5" value="xboxSeZ">
-                        <label class="form-check-label" for="gridRadios5">
-                            Xbox Series Z
+                            Xbox Series X/S
                         </label>
                     </div>
 
@@ -291,24 +291,28 @@
 
     </div>
 
-    <!-- Mostrar texto -->
-    <div class="container">
+    
 
     <?php
+        /* Mostrar texto */
         if (isset($titulo) && isset($consola) && isset($fecha) && isset($pegi)) {
-    ?>
-            <h3><?php echo "Texto enviado" ?></h3>
-            <hr>
-            <h4><?php echo "Titulo: $titulo" ?></h4>
-            <h4><?php echo "Consola: $consola" ?></h4>
-            <h4><?php echo "Fecha de lanzamiento $fecha" ?></h4>
-            <h4><?php echo "Pegi: $pegi" ?></h4>
-            <h4><?php echo "Descripción: $descripcion" ?></h4>
-    <?php
-        }
+            echo "<div class='container'>";
     ?>
 
-    </div>
+            <h1><?php echo "Texto enviado" ?></h1>
+            <hr>
+            <h4><?php echo "Titulo: $titulo";?></h4>
+            <h4><?php echo "Consola: $consola";?></h4>
+            <h4><?php echo "Fecha de lanzamiento: $fecha";?></h4>
+            <h4><?php echo "Pegi: $pegi";?></h4>
+            <h4><?php echo "Descripción: $descripcion";?></h4>
+    <?php
+            echo "</div>";
+        }
+    
+    ?>
+
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
