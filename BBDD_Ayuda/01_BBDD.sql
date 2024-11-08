@@ -40,6 +40,9 @@ DELETE FROM animes;
 SELECT * FROM animes;
 ROLLBACK;
 SELECT * FROM animes;
+INSERT INTO estudios VALUES ("Xunitraka","Málaga",2024);
+SELECT * FROM estudios;
+COMMIT;
 /* 
 	COMMIT --> GUARDAR
     ROLLBACK --> VOLVER AL ÚLTIMO GUARDADO    
