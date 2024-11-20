@@ -10,6 +10,12 @@
         
         require("conexion.php");
     ?>
+    <style>
+        img {
+            width: 100px;
+            height: 150px;
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -23,6 +29,9 @@
             El resultado se almacena en $resultado, que es un objeto con una estructura parecida a los arrays
         */
     ?>
+    <br>
+    <a class="btn btn-info" href="nuevo_anime.php">Crear nuevo anime</a>
+    <br><br>
     <table class="table text-center table-bordered border-secundary table-hover table-light">
         <thead class="table-dark">
             <tr>
@@ -30,6 +39,7 @@
                 <th>Estudio</th>
                 <th>Año</th>
                 <th>Número de temporadas</th>
+                <th>Imagen</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -41,6 +51,11 @@
                     echo "<td class='table-danger'>" . $fila["nombre_estudio"] . "</td>";
                     echo "<td class='table-warning'>" . $fila["anno_estreno"] . "</td>";
                     echo "<td class='table-info'>" . $fila["num_temporadas"] . "</td>";
+                    ?>
+                    <td class='table-secondary'>
+                        <img src="<?php echo $fila["imagen"] ?>" alt="">
+                    </td>
+                    <?php
                     echo "</tr>";
                 }
             ?>
