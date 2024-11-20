@@ -58,3 +58,9 @@ SI ALGUNA DE SUS PARTES FALLA, TODO FALLA Y SE DESHACEN LOS CAMBIOS. (posible pr
     COMMIT; -- solo se guarda cuando se hace commit
 */
 
+USE animes_bd;
+
+ALTER TABLE animes ADD COLUMN imagen VARCHAR(40);
+
+SELECT * FROM animes;
+
