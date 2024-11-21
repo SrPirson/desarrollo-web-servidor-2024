@@ -21,6 +21,15 @@
 <body>
     <h1>Tabla de animes</h1>
     <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // capturamos el id y la guardamos
+            $id_anime = $_POST["id_anime"];
+            echo $id_anime;
+            // borrar el anime
+            $sql = "DELETE FROM animes WHERE id_anime = $id_anime";
+            $_conexion -> query($sql);
+        }
+
         $sql = "SELECT * FROM animes";
         $resultado = $_conexion -> query($sql);
         /* 
@@ -54,6 +63,19 @@
                     ?>
                     <td class='table-secondary'>
                         <img src="<?php echo $fila["imagen"] ?>" alt="">
+                    </td>
+                    <td>
+                        <a  class="btn btn-primary"
+                            href="ver_anime.php?id_anime=<?php echo $fila["id_anime"] ?>">
+                            Editar
+                        </a>
+                    </td>
+                    <td>
+                        <form action="" method="post">
+                            <!-- Capturamos el id de la bbdd para tenerlo para poder eliminarlo -->
+                            <input type="hidden" name="id_anime" value="<?php echo $fila["id_anime"] ?>">
+                            <input class="btn btn-danger" type="submit" value="Borrar">
+                        </form>
                     </td>
                     <?php
                     echo "</tr>";
