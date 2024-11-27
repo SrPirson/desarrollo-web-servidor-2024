@@ -16,3 +16,10 @@ CREATE TABLE productos (
     descripcion VARCHAR(255),
     CONSTRAINT fk_categoria FOREIGN KEY (categoria) REFERENCES categorias(categoria)
 );
+
+CREATE TABLE usuarios (
+	usuario VARCHAR(15) PRIMARY KEY,
+    contrasena VARCHAR(255)
+);
+
+SELECT * FROM usuarios;
