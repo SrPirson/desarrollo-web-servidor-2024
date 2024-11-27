@@ -9,6 +9,14 @@
         ini_set("display_errors", 1 );
         
         require("conexion.php");
+
+        session_start(); // Siempre hay que abrir la sesión, para recuperar
+        if (isset($_SESSION["usuario"])) {
+            echo "<h2>Bienvenid@ " . $_SESSION["usuario"] . "</h2>";
+        } else {
+            header("location: usuario/iniciar_sesion.php"); // Solo se puede utilizar en el head (Función peligrosa)
+            exit; // MATA EL FICHERO shhh
+        }
     ?>
     <style>
         img {
@@ -19,6 +27,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
+    <a class="btn btn-danger" href="usuario/cerrar_sesion.php">Cerrar Sesión</a>
     <h1>Tabla de animes</h1>
     <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
