@@ -43,12 +43,34 @@
 
             move_uploaded_file($ubi_tmp_img, $ubi_final_img);
 
-            
-            $sql = "INSERT INTO animes (titulo, nombre_estudio, anno_estreno, num_temporadas, imagen) 
-                VALUES ('$titulo', '$nombre_estudio', $anno_estreno, $num_temporadas, '$ubi_final_img')";
 
-            $_conexion -> query($sql); 
-           
+            /* 
+                Las 3 etapas de las prepared statements
+
+                1. Preparación
+                2. Enlazado (binding)
+                3. Ejecución
+            */
+
+            // 1. Preparación
+            $sql = $_conexion -> prepare("INSERT INTO animes 
+                (titulo, nombre_estudio, anno_estreno, num_temporadas, imagen) 
+                VALUES (?,?,?,?,?)"
+            );
+
+            // 2. Enlazado
+            $sql -> bind_param("ssiis", 
+                $titulo, $nombre_estudio, $anno_estreno, 
+                $num_temporadas, $ubi_final_img
+            );
+
+            // 3. Ejecución
+            $sql -> execute();
+            
+            
+
+
+            /* $_conexion -> query($sql); */
         }
         
         $sql = "SELECT * FROM estudios ORDER BY nombre_estudio";
@@ -59,6 +81,8 @@
             array_push($estudios, $fila["nombre_estudio"]);
         }
         // print_r($estudios);
+
+        $_conexion -> close(); // para liberar un poquitito de memoria
 
         ?>
         <form class="col-6" action="" method="post" enctype="multipart/form-data">

@@ -28,8 +28,12 @@
         // echo $_GET["id_anime"];
 
         $id_anime = $_GET["id_anime"];
-        $sql2 = "SELECT * FROM animes WHERE id_anime = $id_anime";
-        $resultado2 = $_conexion -> query($sql2);
+        $sql2 = $_conexion -> prepare("SELECT * FROM animes WHERE id_anime = ?");
+        $sql2 -> bind_param("i", $id_anime);
+        $sql2 -> execute();
+        $resultado2 = $sql2 -> get_result();
+
+        /* $resultado2 = $_conexion -> query($sql2); */
 
 
         while ($fila = $resultado2 -> fetch_assoc()) {
@@ -41,8 +45,18 @@
         }
         // echo "<h1>$titulo</h1>";
 
-        $sql = "SELECT * FROM estudios ORDER BY nombre_estudio";
-        $resultado = $_conexion -> query($sql);
+        // 1. Prepare
+        $sql = $_conexion -> prepare("SELECT * FROM estudios ORDER BY ?");
+
+        // 2. Bind
+        $sql -> bind_param("s", $nombre_estudio);
+
+        // 3. Execute
+        $sql -> execute();
+
+        // 4. Retrieve
+        $resultado = $sql -> get_result();
+
         $estudios = [];
 
         while ($fila = $resultado -> fetch_assoc()) {
