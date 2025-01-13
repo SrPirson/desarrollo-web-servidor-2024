@@ -75,6 +75,8 @@
         
         $sql = "SELECT * FROM estudios ORDER BY nombre_estudio";
         $resultado = $_conexion -> query($sql);
+
+        
         $estudios = [];
 
         while ($fila = $resultado -> fetch_assoc()) {

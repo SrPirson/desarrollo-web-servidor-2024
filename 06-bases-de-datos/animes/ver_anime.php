@@ -29,7 +29,7 @@
 
         $id_anime = $_GET["id_anime"];
         $sql2 = $_conexion -> prepare("SELECT * FROM animes WHERE id_anime = ?");
-        $sql2 -> bind_param("i", $id_anime);
+        $sql2 -> bind_param("i", $id_anime); // i (number), s (string), d (float)
         $sql2 -> execute();
         $resultado2 = $sql2 -> get_result();
 
@@ -65,18 +65,42 @@
         
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $titulo = $_POST["titulo"];
-            $nombre_estudio = $_POST["nombre_estudio"];
+            $nombre_estudio = $_POST["nombre_estudio"];  
             $anno_estreno = $_POST["anno_estreno"];
             $num_temporadas = $_POST["num_temporadas"];
 
-            $sql2 = "UPDATE animes SET
+            /* $sql2 = "UPDATE animes SET
                 titulo = '$titulo',
                 nombre_estudio = '$nombre_estudio',
                 anno_estreno = $anno_estreno,
                 num_temporadas = $num_temporadas
                 WHERE id_anime = $id_anime
             ";
-            $_conexion -> query($sql2);
+            $_conexion -> query($sql2); */
+
+            // 1. Prepare
+            $sql2 = $_conexion -> prepare("UPDATE animes SET
+                titulo = ?,
+                nombre_estudio = ?,
+                anno_estreno = ?,
+                num_temporadas = ?
+                WHERE id_anime = ?
+            ");
+
+            // 2. Binding
+            $sql2 -> bind_param("ssiii", 
+            $titulo, 
+            $nombre_estudio,
+            $anno_estreno,
+            $num_temporadas,
+            $id_anime
+            );
+
+            // 3. Execute
+            $sql2 -> execute();
+
+            // 4. Retrieve
+            $resultado = $sql -> get_result();
         }
 
         ?>
