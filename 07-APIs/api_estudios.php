@@ -12,7 +12,7 @@ switch ($metodo) {
         break;
     
     case "POST":
-        echo json_encode(["metodo" => "post"]);
+        manejarPost($entrada);
         break;
     
     case "PUT":
@@ -20,7 +20,7 @@ switch ($metodo) {
         break;
     
     case "DELETE":
-        echo json_encode(["metodo" => "delete"]);
+        manejarDelete($entrada);
         break;
     
     default:
@@ -29,10 +29,50 @@ switch ($metodo) {
 }
 
 function manejarGet() {
+
     global $_conexion;
     $sql = "SELECT * FROM estudios";
     $stmt = $_conexion -> prepare($sql);
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($resultado);
+
+}
+
+function manejarPost($entrada) {
+
+    global $_conexion;
+    $sql = "INSERT estudios(nombre_estudio, ciudad, anno_fundacion) 
+        VALUES (:nombre_estudio, :ciudad, :anno_fundacion)";
+
+    $stmt = $_conexion -> prepare($sql);
+    $stmt -> execute([
+        "nombre_estudio" => $entrada["nombre_entrada"],
+        "ciudad" => $entrada["ciudad"],
+        "anno_fundacion" => $entrada["anno_fundacion"]
+    ]);
+
+    if ($stmt) {
+        echo json_encode(["mensaje" => "El estudio se ha insertado correctamente."]);
+    } else {
+        echo json_encode(["mensaje" => "ERROR: No se ha podido insertar el estudio."]);
+    }
+
+}
+
+function manejarDelete($entrada) {
+
+    global $_conexion;
+    $sql = "DELETE FROM estudios WHERE nombre_estudio = :nombre_estudio";
+    $stmt = $_conexion -> prepare($sql);
+    $stmt -> execute([
+        "nombre_estudio" => $entrada["nombre_estudio"]
+    ]);
+
+    if ($stmt) {
+        echo json_encode(["mensaje" => "El estudio se ha borrado correctamente."]);
+    } else {
+        echo json_encode(["mensaje" => "ERROR: No se ha podido borrar el estudio."]);
+    }
+
 }
