@@ -16,7 +16,7 @@ switch ($metodo) {
         break;
     
     case "PUT":
-        echo json_encode(["metodo" => "put"]);
+        manejarPut($entrada);
         break;
     
     case "DELETE":
@@ -31,10 +31,41 @@ switch ($metodo) {
 function manejarGet() {
 
     global $_conexion;
-    $sql = "SELECT * FROM estudios";
-    $stmt = $_conexion -> prepare($sql);
-    $stmt->execute();
-    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Si filtramos por un parametro en concreto filtramos por ese parametro
+    if (isset($_GET["ciudad"]) && isset($_GET["anno_fundacion"])) {
+        $sql = "SELECT * FROM estudios WHERE 
+        ciudad = :ciudad,
+        anno_fundacion = :anno_fundacion";
+        $stmt = $_conexion -> prepare($sql);
+        $stmt -> execute([
+            "ciudad" => $_GET["ciudad"],
+            "anno_fundacion" => $_GET["anno_fundacion"]
+        ]);
+    } elseif (isset($_GET["anno_fundacion"])) {
+        $sql = "SELECT * FROM estudios WHERE anno_fundacion = :anno_fundacion";
+        $stmt = $_conexion -> prepare($sql);
+        $stmt -> execute([
+            "anno_fundacion" => $_GET["anno_fundacion"]
+        ]);
+    } elseif (isset($_GET["ciudad"])) {
+        $sql = "SELECT * FROM estudios WHERE ciudad = :ciudad";
+        $stmt = $_conexion -> prepare($sql);
+        $stmt -> execute([
+            "ciudad" => $_GET["ciudad"]
+        ]);
+    } else {
+        // Si no tiene ningún parametro muestra todo o ningun where.
+        $sql = "SELECT * FROM estudios";
+        $stmt = $_conexion -> prepare($sql);
+        $stmt -> execute();
+    }
+    /* 
+        Si tenemos varios parametros pondremos varios if, si tenemos más de 3 o 4 tendremos
+        que hacer una inyección dinamica de sql 
+    */
+
+    $resultado = $stmt -> fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($resultado);
 
 }
@@ -75,4 +106,25 @@ function manejarDelete($entrada) {
         echo json_encode(["mensaje" => "ERROR: No se ha podido borrar el estudio."]);
     }
 
+}
+
+function manejarPut($entrada){
+
+    global $_conexion;
+    $sql = "UPDATE estudios SET
+    ciudad = :ciudad,
+    anno_fundacion = :anno_fundacion
+    WHERE nombre_estudio = :nombre_estudio
+    ";
+    $stmt = $_conexion -> prepare($sql);
+    $stmt -> execute([
+        "ciudad" => $entrada["ciudad"],
+        "anno_fundacion" => $entrada["anno_fundacion"],
+        "nombre_estudio" => $entrada["nombre_estudio"]
+    ]);
+    if ($stmt) {
+        echo json_encode(["mensaje" => "El estudio se ha actualizado correctamente."]);
+    } else {
+        echo json_encode(["mensaje" => "ERROR: No se ha podido actualizar el estudio."]);
+    }
 }

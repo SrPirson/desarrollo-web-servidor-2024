@@ -82,7 +82,7 @@
         while ($fila = $resultado -> fetch_assoc()) {
             array_push($estudios, $fila["nombre_estudio"]);
         }
-        // print_r($estudios);
+        //print_r($estudios);
 
         $_conexion -> close(); // para liberar un poquitito de memoria
 

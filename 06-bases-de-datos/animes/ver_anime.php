@@ -28,7 +28,11 @@
         // echo $_GET["id_anime"];
 
         $id_anime = $_GET["id_anime"];
+
+        // 1. Prepare
         $sql2 = $_conexion -> prepare("SELECT * FROM animes WHERE id_anime = ?");
+
+        
         $sql2 -> bind_param("i", $id_anime); // i (number), s (string), d (float)
         $sql2 -> execute();
         $resultado2 = $sql2 -> get_result();
@@ -98,9 +102,6 @@
 
             // 3. Execute
             $sql2 -> execute();
-
-            // 4. Retrieve
-            $resultado = $sql -> get_result();
         }
 
         ?>
