@@ -78,7 +78,7 @@ function manejarPost($entrada) {
 
     $stmt = $_conexion -> prepare($sql);
     $stmt -> execute([
-        "nombre_estudio" => $entrada["nombre_entrada"],
+        "nombre_estudio" => $entrada["nombre_estudio"],
         "ciudad" => $entrada["ciudad"],
         "anno_fundacion" => $entrada["anno_fundacion"]
     ]);
