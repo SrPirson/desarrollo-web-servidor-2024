@@ -10,10 +10,28 @@
     ?>
 </head>
 <body>
+
+    <form action="" method="get">
+        <div>
+            <label>Ciudad</label>
+            <input type="text" name="ciudad">
+            <input type="submit" value="Buscar">
+        </div>
+    </form>
+
+    <br>
+
     <?php 
-    
-        // Configurar la conexion de a la API
+
         $apiUrl = "http://localhost/Ejercicios/07-APIs/estudios/api_estudios.php";
+    
+        if (!empty($_GET["ciudad"])) {
+            $ciudad = $_GET["ciudad"];
+            $apiUrl = "$apiUrl?ciudad=$ciudad";
+        }
+
+        // Configurar la conexion de a la API
+        
         $curl = curl_init(); // Inicializamos la libreria cUrl
         curl_setopt($curl, CURLOPT_URL, $apiUrl); // Indicamos que la conexion va por URL e indicamos la URL
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Para habilitar la transferencia de datos
@@ -46,5 +64,7 @@
             <?php } ?>
         </tbody>
     </table>
+
+    <br>
 </body>
 </html>
