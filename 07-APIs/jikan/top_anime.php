@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,8 +22,17 @@
 </head>
 <body>
     <?php 
+        
+        if (isset($_GET['page'])) {
+            $paginaPrincipal = $_GET['page'];
+            if ($paginaPrincipal < 1) {
+                $paginaPrincipal = 1;
+            }
+        } else {
+            $paginaPrincipal = 1;
+        }
 
-        $apiUrl = "https://api.jikan.moe/v4/top/anime?page=3";
+        $apiUrl = "https://api.jikan.moe/v4/top/anime?page=$paginaPrincipal";
 
         // Configurar la conexion de a la API
         
@@ -35,6 +44,13 @@
 
         $datos = json_decode($respuesta, true);
         $animes = $datos["data"];
+        $paginas = $datos["pagination"];
+
+        $paginaActual = $paginas["current_page"];
+        $nextPagina = ($paginaActual + 1);
+        $prePagina = ($paginaActual - 1);
+        $totalPaginas = $paginas["last_visible_page"];
+
 
     ?>
 
@@ -45,7 +61,6 @@
                 <th>Titulo</th>
                 <th>Nota</th>
                 <th>Imagen</th>
-                <th>Trailer</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -65,18 +80,40 @@
                 <td class='table-secondary'>
                     <img src="<?php echo $anime["images"]["jpg"]["image_url"] ?>" alt="<?php echo $anime["title"] ?>">
                 </td>
-                
-                <td class='table-secondary'>
-                    <iframe src="<?php echo $anime["trailer"]["embed_url"] ?>" title="<?php echo $anime["title"] ?>"></iframe>
-                </td>
             <?php 
                     echo "</tr>";
                 }   
             ?>
         </tbody>
     </table>
+    
+    <div class="d-flex justify-content-center my-3">
 
-    <input type="button" >
+        <!-- Página anterior -->
+        <?php 
+            if ($paginaActual > $totalPaginas) {
+                $prePagina = $totalPaginas;
+            }
+        ?>
+
+        <?php if ($paginaActual > 1) { ?>
+            <a href="?page=<?= $prePagina ?>" class="btn btn-primary">Página Anterior</a>
+        <?php } else { ?>
+            <a href="#" class="btn btn-secondary" hidden >Página Anterior</a>
+        <?php } ?>
+
+        <!-- Siguiente página -->
+        
+        <?php if ($paginaActual < $totalPaginas) { ?>
+            <a href="?page=<?= $nextPagina ?>" class="btn btn-primary">Siguiente Página</a>
+        <?php } else { ?>
+            <a href="#" class="btn btn-secondary" hidden >Siguiente Página</a>
+        <?php } ?>
+
+    </div>
+
+
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
