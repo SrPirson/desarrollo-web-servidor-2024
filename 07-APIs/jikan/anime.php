@@ -60,11 +60,12 @@
             <?php
             $relaciones = $anime["relations"];
             foreach ($relaciones as $relacion) {
-                foreach ($relacion["entry"] as $tipo) {
-                    if ($tipo["type"] == "anime") { ?>
+                $entradas = $relacion["entry"];
+                foreach ($entradas as $entrada) {
+                    if ($entrada["type"] == "anime") { ?>
                         <li>
-                            <a href="anime.php?id=<?php echo $tipo["mal_id"] ?>">
-                                <?php echo $tipo["name"] ?>
+                            <a href="anime.php?id=<?php echo $entrada["mal_id"] ?>">
+                                <?php echo $entrada["name"] ?>
                             </a>
                         </li>
                     <?php
