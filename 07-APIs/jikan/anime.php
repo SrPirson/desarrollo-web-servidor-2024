@@ -22,6 +22,11 @@
 </head>
 <body>
     <?php 
+        /* No permitir mostrar la página si no tenemos ID */
+        if (!isset($_GET["id"])) {
+            header("location: top_anime.php");
+        }
+
         $id = $_GET["id"];
         $apiUrl = "https://api.jikan.moe/v4/anime/$id/full";
 
