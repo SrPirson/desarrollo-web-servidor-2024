@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perro aleatorio</title>
+    <?php
+        error_reporting(E_ALL);
+        ini_set("display_errors", 1);
+    ?>
 </head>
 <body>
 
@@ -19,18 +23,21 @@
         curl_close($curl);
 
         $datos = json_decode($respuesta, true);
-        $names = $datos["message"];
+        $razas = $datos["message"];
 
     ?>
 
     <form method="get">
         <label for="razas">Selecciona una raza:</label>
         <select name="razas" id="razas">
-            <?php foreach ($names as $key => $value) { ?>
+            <?php foreach ($razas as $raza => $subrazas) { ?>
                 <option value="" hidden>-- Selecciona una raza --</option>
-                <option value="<?php echo $key ?>">
-                    <?php echo $key ?>
-                </option>
+                    <?php if (empty($subrazas)) { ?>
+                        <option value="<?php echo $raza ?>"><?php echo $raza ?></option>
+                    <?php } else {
+                        foreach ($subrazas as $subraza) { ?>
+                            <option value="<?php echo $raza . " " . $subraza ?>"><?php echo $raza . " " . $subraza ?></option>
+                    <?php }} ?>
             <?php } ?>
         </select>
     </form>
@@ -38,9 +45,8 @@
     
     <?php
 
-        $razaPerro = $_GET["razas"];
 
-        $apiUrlImg = "https://dog.ceo/api/breed//images/random";
+        $apiUrlImg = "https://dog.ceo/api/breed/basenji/images/random";
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $apiUrlImg);
@@ -54,6 +60,7 @@
     ?>
 
     <br><img src="<?php echo $dogs ?>" alt="Perro">
+    <a href="?">Random</a>
 
 </body>
 </html>
