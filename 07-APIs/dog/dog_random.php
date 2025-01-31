@@ -21,16 +21,16 @@
         $datos = json_decode($respuesta, true);
         $names = $datos["message"];
 
-
-
     ?>
 
     <form method="get">
         <label for="razas">Selecciona una raza:</label>
-
         <select name="razas" id="razas">
-            <?php foreach ($names as $name) { ?>
-                <select value="<?php $name[""] ?>"></select>
+            <?php foreach ($names as $key => $value) { ?>
+                <option value="" hidden>-- Selecciona una raza --</option>
+                <option value="<?php echo $key ?>">
+                    <?php echo $key ?>
+                </option>
             <?php } ?>
         </select>
     </form>
@@ -38,7 +38,9 @@
     
     <?php
 
-        $apiUrlImg = "https://dog.ceo/api/breed/affenpinscher/images/random";
+        $razaPerro = $_GET["razas"];
+
+        $apiUrlImg = "https://dog.ceo/api/breed//images/random";
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $apiUrlImg);
@@ -51,7 +53,7 @@
 
     ?>
 
-    <img src="<?php echo $dogs ?>" alt="Perro">
+    <br><img src="<?php echo $dogs ?>" alt="Perro">
 
 </body>
 </html>
