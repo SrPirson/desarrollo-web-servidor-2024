@@ -14,6 +14,7 @@
 
     <?php
 
+        //Obtener los nombres de las razas
         $apiUrlName = "https://dog.ceo/api/breeds/list/all";
 
         $curl = curl_init();
@@ -25,42 +26,59 @@
         $datos = json_decode($respuesta, true);
         $razas = $datos["message"];
 
+        if (isset($_GET["razas"])) {
+            $seleccionRaza = $_GET["razas"];
+        } else {
+            $seleccionRaza = "";
+        }
+
     ?>
 
+    <!-- Mostrar los nombres de las razas -->
     <form method="get">
         <label for="razas">Selecciona una raza:</label>
         <select name="razas" id="razas">
+            <option value="" hidden>-- Selecciona una raza --</option>
             <?php foreach ($razas as $raza => $subrazas) { ?>
-                <option value="" hidden>-- Selecciona una raza --</option>
                     <?php if (empty($subrazas)) { ?>
-                        <option value="<?php echo $raza ?>"><?php echo $raza ?></option>
+                        <option value="<?php echo $raza ?>" <?php if($seleccionRaza == $raza){
+                            echo "selected";} ?>><?php echo ucfirst($raza) ?></option>
                     <?php } else {
-                        foreach ($subrazas as $subraza) { ?>
-                            <option value="<?php echo $raza . " " . $subraza ?>"><?php echo $raza . " " . $subraza ?></option>
+                        foreach ($subrazas as $subraza) { 
+                            $total = $raza . "-" . $subraza;
+                            ?>
+                            <option value="<?php echo $total ?>" <?php if($seleccionRaza == $total){
+                            echo "selected"; } ?>><?php echo ucfirst($raza) . " " . ucfirst($subraza) ?></option>
                     <?php }} ?>
             <?php } ?>
         </select>
+        <button type="submit">Imagen</button> <!-- Recargar la pagina para una imagen nueva -->
     </form>
 
     
     <?php
+        // Comprobar si se ha seleccionado una raza
+        if (isset($_GET["razas"]) && !empty($_GET["razas"])) {
+            $perro = str_replace("-", "/", $_GET["razas"]);
+            $apiUrlImg = "https://dog.ceo/api/breed/$perro/images/random";
 
+            // Obtener la imagen de la API
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $apiUrlImg);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $respuestaImg = curl_exec($curl);
+            curl_close($curl);
 
-        $apiUrlImg = "https://dog.ceo/api/breed/basenji/images/random";
+            $datosImg = json_decode($respuestaImg, true);
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $apiUrlImg);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $respuesta = curl_exec($curl);
-        curl_close($curl);
-
-        $datos = json_decode($respuesta, true);
-        $dogs = $datos["message"];
-
+            if ($datosImg["status"] == "success") { // Compruebo que haya alguna imagen de la raza seleccionada
+                $dogs = $datosImg["message"]; // Obtengo la url de la imagen para mostrarla
+                echo "<br><img src='$dogs' alt='Perro' width='300'>";
+            } else {
+                echo "<p>No se pudo obtener la imagen.</p>";
+            }
+        }
     ?>
-
-    <br><img src="<?php echo $dogs ?>" alt="Perro">
-    <a href="?">Random</a>
 
 </body>
 </html>
