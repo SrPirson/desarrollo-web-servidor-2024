@@ -15,8 +15,11 @@ use App\Http\Controllers\MarcaController;
 |
 */
 
+
 Route::get("/coches", [CocheController::class, "index"]);
-Route::get("/marcas", [MarcaController::class, "index"]);
+
+//Route::get("/marcas", [MarcaController::class, "index"]);
+Route::resource("/marcas", MarcaController::class); // Para tener una URL por cada apartado del Controller
 
 Route::get('/', function () {
     return view('welcome');

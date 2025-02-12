@@ -3,17 +3,76 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Models\Marca;
 
 class MarcaController extends Controller
 {
-    public function index () {
-        $marcas = [
-            "Ducado",
-            "Camel",
-            "Chesterfield",
-            "Marlboro"
-        ];
-        
-        return view("marcas", ["marcas" => $marcas]);
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        /* $marcas = [
+            "Mazda",
+            "Mercedes-Benza",
+            "MG",
+            "Tesla",
+            "Chrysler",
+            "Xiaomi",
+        ]; */
+
+        $marcas = Marca::all(); // Para recoger todas las marcas y lo guarda como array en la variable marcas
+
+        return view("marcas/index", ["marcas" => $marcas]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Mostrar recursos especificados
+     */
+    public function show(string $id)
+    {
+        $marca = Marca::find($id);
+
+        return view("marcas/show",["marca" => $marca]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
