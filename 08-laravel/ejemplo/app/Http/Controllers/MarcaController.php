@@ -31,7 +31,8 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        // Creamos la pagina para crear una nueva marca
+        return view("marcas/create");
     }
 
     /**
@@ -39,7 +40,14 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Aqui mandamos la información del formulario a la BBDD
+        $marca = new Marca;
+        $marca -> marca = $request -> input("marca"); // marca es el del formulario
+        $marca -> ano_fundacion = $request -> input("ano_fundacion"); // año de fundación es el del formulario
+        $marca -> pais = $request -> input("pais");
+        $marca -> save(); // esto crea el objeto
+
+        return redirect("/marcas"); // Para cuando se inserte nos mande al index
     }
 
     /**
