@@ -67,9 +67,6 @@
             // 3. Ejecución
             $sql -> execute();
             
-            
-
-
             /* $_conexion -> query($sql); */
         }
         
