@@ -16,6 +16,7 @@
         <label>País: </label>
         <input type="text" name="pais"><br><br>
         <input type="submit" value="Crear">
+        <a href="{{ route('marcas.index') }}">Volver</a>
     </form>
 </body>
 </html>

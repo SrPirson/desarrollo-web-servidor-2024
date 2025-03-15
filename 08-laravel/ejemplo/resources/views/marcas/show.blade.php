@@ -12,7 +12,8 @@
     <div class="container">
         <h1>Marca</h1>
         <p>{{ $marca -> marca }}</p>
-
+        <a href="{{ route('marcas.edit', ["marca" => $marca -> id]) }}">Editar</a>
+        <a href="{{ route('marcas.index') }}">Volver</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

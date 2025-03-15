@@ -11,21 +11,29 @@
 
     <div class="container">
         <h1>Lista de marcas</h1>
-
+        <a href="{{ route('marcas.create') }}">Añadir</a>
         <table class="table text-center table-bordered border-secundary table-hover table-light">
             <thead class="table-dark">
                 <tr>
                     <th>Marca</th>
                     <th>Año de fundación</th>
                     <th>País</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
                 @foreach ($marcas as $marca)
                     <tr>
-                        <td><a href="/marcas/{{ $marca -> id }}">{{ $marca -> marca }}</a></td>
+                        <td><a href="{{ route('marcas.show', ["marca" => $marca -> id]) }}">{{ $marca -> marca }}</a></td>
                         <td>{{ $marca -> ano_fundacion }}</td>
                         <td>{{ $marca -> pais }}</td>
+                        <td>
+                            <form action="{{ route('marcas.destroy', ["marca" => $marca -> id]) }}" method="post">
+                                @csrf 
+                                {{ method_field("DELETE") }}
+                                <input type="submit" value="Borrar">
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
